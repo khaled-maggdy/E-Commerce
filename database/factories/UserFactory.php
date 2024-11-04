@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,7 +25,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'image' => fake()->randomElement([
+                '6 (2).jpg',
+                '6 (3).jpg',
+                '6 (4).jpg',
+                '6 (5).jpg',
+                '6 (6).jpg',
+                '6 (7).jpg',
+            ]),
+            'phone' => fake()->unique()->e164PhoneNumber(),
+            'address'=>fake()->address(),
+            'city_id' => City::all()->random()->id,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

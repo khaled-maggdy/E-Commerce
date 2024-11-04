@@ -17,7 +17,23 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'image' => fake()->randomElement([
+                '6 (2).jpg',
+                '6 (3).jpg',
+                '6 (4).jpg',
+                '6 (5).jpg',
+                '6 (6).jpg',
+                '6 (7).jpg',
+            ]),
+            'category'=>fake()->randomElement([
+             'Formal Wear',
+             'Evening Wear',
+             'Sportswear',
+             'Workwear',
+             'Seasonal Wear',
+             'Traditional Wear',
+             'Kids Clothing',
+            ])
         ];
     }
 }
