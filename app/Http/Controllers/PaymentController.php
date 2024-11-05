@@ -13,7 +13,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::all();
+        return $this->response(code : 200 , data : $payments);
     }
 
     /**
@@ -37,7 +38,9 @@ class PaymentController extends Controller
      */
     public function show(Payment $payment)
     {
-        //
+      $id = $payment->id;
+        $payment = Payment::with('order', 'user')->find($id);
+        return $this->response(code: 200, data: $payment);
     }
 
     /**
@@ -63,4 +66,30 @@ class PaymentController extends Controller
     {
         //
     }
+    public function delete(Payment $payment)
+    {
+        
+        $delete = $payment->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(Payment $payment)
+    {
+        
+        $deleted = $payment->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore( Payment $payment)
+    {
+        
+        $payment = Payment::where('id',  $payment)->restore();
+        return $this->response(code: 202, data: $payment);
+    }
+    public function delete_from_trash($payment, Payment $Payment)
+    {
+        
+        $payment  = Payment::where('id', $payment)->forceDelete();
+        return $this->response(code: 202, data: $payment);
+    }
+
 }

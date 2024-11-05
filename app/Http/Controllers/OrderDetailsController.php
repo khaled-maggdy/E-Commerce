@@ -13,7 +13,8 @@ class OrderDetailsController extends Controller
      */
     public function index()
     {
-        //
+        $orderdetails = OrderDetails::all();
+        return $this->response(code: 200, data: $orderdetails);
     }
 
     /**
@@ -37,7 +38,9 @@ class OrderDetailsController extends Controller
      */
     public function show(OrderDetails $orderDetails)
     {
-        //
+        $id = $orderDetails->id;
+        $orderDetails = OrderDetails::with('product', 'order')->find($id);
+        return $this->response(code: 200, data: $orderDetails);
     }
 
     /**
@@ -62,5 +65,30 @@ class OrderDetailsController extends Controller
     public function destroy(OrderDetails $orderDetails)
     {
         //
+    }
+    public function delete(OrderDetails $orderDetails)
+    {
+        
+        $delete = $orderDetails->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(OrderDetails $orderDetails)
+    {
+        
+        $deleted = $orderDetails->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore( OrderDetails $orderDetails)
+    {
+        
+        $orderDetails = OrderDetails::where('id',  $orderDetails)->restore();
+        return $this->response(code: 202, data: $orderDetails);
+    }
+    public function delete_from_trash($orderDetails, OrderDetails $OrderDetails)
+    {
+        
+        $orderDetails  = OrderDetails::where('id', $orderDetails)->forceDelete();
+        return $this->response(code: 202, data: $orderDetails);
     }
 }

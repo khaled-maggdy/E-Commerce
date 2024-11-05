@@ -13,7 +13,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        return $this->response(code:200 , data:$orders);
     }
 
     /**
@@ -37,7 +38,9 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $id = $order->id;
+        $order = Order::with('user_id')->find($id);
+        return $this->response(code: 200, data: $order);
     }
 
     /**
@@ -62,5 +65,30 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+    public function delete(Order $order)
+    {
+        
+        $delete = $order->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(Order $order)
+    {
+        
+        $deleted = $order->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore( Order $order)
+    {
+        
+        $order = Order::where('id',  $order)->restore();
+        return $this->response(code: 202, data: $order);
+    }
+    public function delete_from_trash(Order $order)
+    {
+        
+        $order  = Order::where('id', $order)->forceDelete();
+        return $this->response(code: 202, data: $order);
     }
 }

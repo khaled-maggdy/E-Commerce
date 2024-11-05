@@ -13,7 +13,8 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $cites = City::all();
+        return $this->Response(code : 200 , data : $cites);
     }
 
     /**
@@ -37,7 +38,7 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        //
+        return $this->response(code : 200 , data:$city);
     }
 
     /**
@@ -62,5 +63,27 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         //
+    }
+    public function delete(City $city)
+    {
+        $delete = $city->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(City $city)
+    {
+        $deleted = $city->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore( City $city)
+    {
+        $city = City::where('id', $city)->restore();
+        return $this->response(code: 202, data: $city);
+    }
+    public function delete_from_trash( $city, City $City)
+    {
+
+        $city = City::where('id', $city)->forceDelete();
+        return $this->response(code: 202, data: $city);
     }
 }

@@ -13,7 +13,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::all();
+        return $this->response(code : 200 , data : $reviews);
     }
 
     /**
@@ -37,7 +38,9 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        $id = $review->id;
+        $review = Review::with('user' , 'product' )->find()->id;
+        return $this->response(code : 200 , data : $review);
     }
 
     /**
@@ -62,5 +65,30 @@ class ReviewController extends Controller
     public function destroy(Review $review)
     {
         //
+    }
+    public function delete(Review $review)
+    {
+        
+        $delete = $review->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(Review $review)
+    {
+        
+        $deleted = $review->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore($review, Review $g)
+    {
+        
+        $review = Review::where('id',  $review)->restore();
+        return $this->response(code: 202, data: $review);
+    }
+    public function delete_from_trash($review, Review $Review)
+    {
+        
+        $review  = Review::where('id', $review)->forceDelete();
+        return $this->response(code: 202, data: $review);
     }
 }

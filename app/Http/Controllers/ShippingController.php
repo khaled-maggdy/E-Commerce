@@ -13,7 +13,8 @@ class ShippingController extends Controller
      */
     public function index()
     {
-        //
+        $shippings = Shipping::all();
+        return $this->response(code : 200 , data : $shippings);
     }
 
     /**
@@ -37,7 +38,9 @@ class ShippingController extends Controller
      */
     public function show(Shipping $shipping)
     {
-        //
+        $id = $shipping->id;
+        $shipping = Shipping::with('order')->find()->id;
+        return $this->response(code:200 , data: $shipping);
     }
 
     /**
@@ -62,5 +65,30 @@ class ShippingController extends Controller
     public function destroy(Shipping $shipping)
     {
         //
+    }
+    public function delete(Shipping $shipping)
+    {
+        
+        $delete = $shipping->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(Shipping $shipping)
+    {
+        
+        $deleted = $shipping->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore($shipping, Shipping $g)
+    {
+        
+        $shipping = Shipping::where('id',  $shipping)->restore();
+        return $this->response(code: 202, data: $shipping);
+    }
+    public function delete_from_trash($shipping, Shipping $Shipping)
+    {
+        
+        $shipping  = Shipping::where('id', $shipping)->forceDelete();
+        return $this->response(code: 202, data: $shipping);
     }
 }

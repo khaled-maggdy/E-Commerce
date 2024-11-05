@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::all();
+        return $this->response(code: 200 , data: $category);
     }
 
     /**
@@ -37,7 +38,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return $this->response(code: 200, data: $category);  
     }
 
     /**
@@ -62,5 +63,30 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+    }
+    public function delete(Category $category)
+    {
+        
+        $delete = $category->delete();
+        return $this->response(code: 202, data: $delete);
+    }
+
+    public function deleted(Category $category)
+    {
+        
+        $deleted = $category->onlyTrashed()->get();
+        return $this->response(code: 302, data: $deleted);
+    }
+    public function restore( Category $category)
+    {
+       
+        $category = Category::where('id',  $category)->restore();
+        return $this->response(code: 202, data: $category);
+    }
+    public function delete_from_trash(Category $category)
+    {
+        
+        $category  = Category::where('id', $category)->forceDelete();
+        return $this->response(code: 202, data: $category);
     }
 }
