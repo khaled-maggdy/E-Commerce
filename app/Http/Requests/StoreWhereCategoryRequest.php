@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWhereCityRequest extends FormRequest
+class StoreWhereCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class StoreWhereCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city' => 'required|max:30|exists:cities,city'
+            'category' => 'required|max:40|exists:categories,category'
         ];
     }
 }

@@ -47,9 +47,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $id = $user->id;
+        $user = user::with('orders', 'city', 'reviews')->find($id);
+        return $this->response(code: 200, data: $user);
     }
 
     /**

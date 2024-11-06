@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderDetails extends Model
 {
-    use HasFactory,SoftDeletes;
-// each invoice has only one product 
-    public function product () : BelongsTo {
+    use HasFactory, SoftDeletes;
+    // each invoice has only one product 
+    public function product(): BelongsTo
+    {
         return $this->belongsTo(Product::class);
     }
-
 }

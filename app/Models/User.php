@@ -34,17 +34,20 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-// each user has many order
-public function orders () : HasMany {
-    return $this->hasMany(Order::class);
-}
+    // each user has many order
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 
-// each user has many reviews
-    public function reviews () : HasMany {
+    // each user has many reviews
+    public function reviews(): HasMany
+    {
         return $this->hasMany(Review::class);
     }
     // each user has city
-    public function city () : BelongsTo {
+    public function city(): BelongsTo
+    {
         return $this->belongsTo(City::class);
     }
 

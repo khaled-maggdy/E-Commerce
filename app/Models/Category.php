@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory,SoftDeletes;
-//    each category has many products but each product has one category
-    public function products () : HasMany {
-         return $this->hasMany(Product::class);
+    use HasFactory, SoftDeletes;
+    //    each category has many products but each product has one category
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }

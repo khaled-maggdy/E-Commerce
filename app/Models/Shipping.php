@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shipping extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     // each ship has one order
-    public function order () : BelongsTo {
-        return $this->belongsTo(Order::class );
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
-
 }

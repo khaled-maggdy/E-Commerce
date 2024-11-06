@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
-    use HasFactory,SoftDeletes;
-// each user has one city but each city has many users
-    public function users () : HasMany {
+    use HasFactory, SoftDeletes;
+    // each user has one city but each city has many users
+    public function users(): HasMany
+    {
         return $this->hasMany(User::class);
     }
-
 }
